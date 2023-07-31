@@ -1,0 +1,66 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+void calculateMiss(int x, int y, int z, int n, int& miss, double& relativeMiss) {
+    int xn_yn = pow(x, n) + pow(y, n);
+    int zn = pow(z, n);
+    int znp1 = pow(z + 1, n);
+    
+    int miss1 = abs(xn_yn - zn);
+    int miss2 = abs(znp1 - xn_yn);
+
+    miss = min(miss1, miss2);
+    relativeMiss = static_cast<double>(miss) / xn_yn * 100;
+}
+
+void findNearMisses(int n, int k) {
+    double smallestRelativeMiss = 100.0; // Initialize with a large value
+    int bestX, bestY, bestZ;
+    int bestMiss;
+
+    for (int x = 10; x <= k; x++) {
+        for (int y = 10; y <= k; y++) {
+            for (int z = max(x, y) + 1; z <= k; z++) {
+                int miss;
+                double relativeMiss;
+                calculateMiss(x, y, z, n, miss, relativeMiss);
+                
+                if (relativeMiss < smallestRelativeMiss) {
+                    smallestRelativeMiss = relativeMiss;
+                    bestX = x;
+                    bestY = y;
+                    bestZ = z;
+                    bestMiss = miss;
+                }
+            }
+        }
+    }
+
+    cout << "Best Near Miss (for n = " << n << "):" << endl;
+    cout << "----------------------------------------" << endl;
+    cout << "x = " << bestX << ", y = " << bestY << ", z = " << bestZ << endl;
+    cout << "(x^n + y^n) = " << pow(bestX, n) << " + " << pow(bestY, n) << " = " << pow(bestX, n) + pow(bestY, n) << endl;
+    cout << "z^n = " << pow(bestZ, n) << endl;
+    cout << "Miss = " << bestMiss << endl;
+    cout << "Relative Miss = " << smallestRelativeMiss << "%" << endl;
+}
+
+int main() {
+    int n, k;
+
+    cout << "Enter the value of n (2 < n < 12): ";
+    cin >> n;
+
+    cout << "Enter the value of k (k > 10): ";
+    cin >> k;
+
+    if (n > 2 && n < 12 && k > 10) {
+        findNearMisses(n, k);
+    }
+    else {
+        cout << "Invalid input. Please ensure 2 < n < 12 and k > 10." << endl;
+    }
+
+    return 0;
+}

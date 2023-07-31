@@ -1,0 +1,3 @@
+Compile and run it using a C++ compiler. The program will prompt you to enter the values of n and k. It will then calculate and print out the best "near miss" (smallest relative miss) for the given n and k values. The program will find the best x, y, and z that result in the smallest relative miss, as per the instructions given.
+
+This C++ program systematically searches for near misses, so it may take some time to complete depending on the chosen values of n and k. Avoid choosing very large values for k, as it may result in excessive computation time or memory usage.
